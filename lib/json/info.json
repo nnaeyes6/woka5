@@ -1,0 +1,38 @@
+[
+    {
+        "title": "Cleaning",
+        "img": "lib/images/cleaning.png"
+    },
+    {
+        "title": "Delivery",
+        "img": "lib/images/delivery.png"
+    },
+    {
+        "title": "Dog Walk",
+        "img": "lib/images/dog_walk.png"
+    },
+    {
+        "title": "Electrical",
+        "img": "lib/images/electrical.png"
+    },
+    {
+        "title": "Furniture",
+        "img": "lib/images/furniture.png"
+    },
+    {
+        "title": "Painting",
+        "img": "lib/images/painting.png"
+    },
+    {
+        "title": "Plumbing",
+        "img": "lib/images/plumbing.png"
+    },
+    {
+        "title": "Help Moving",
+        "img": "lib/images/moving.png"
+    },
+    {
+        "title": "Yard Work",
+        "img": "lib/images/yard_work.png"
+    }
+]
