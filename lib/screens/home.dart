@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
             ),
             TextButton(
               onPressed: () {
-                AuthProvider().signOut();
+                AuthProvider().signOut(context);
               },
               child: Icon(Icons.logout_outlined,
                   size: 20, color: Colors.yellow[900]),

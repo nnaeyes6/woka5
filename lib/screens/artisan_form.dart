@@ -24,7 +24,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
         centerTitle: true,
         elevation: 10,
         title: CustomText(
-          text: 'Registration',
+          text: 'Woka Registration',
           color: white,
           fontWeight: FontWeight.bold,
           size: 25,
@@ -35,193 +35,217 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
         child: ListView(
           padding: EdgeInsets.all(4),
           children: [
-            Center(
-              child: Container(
-                height: 100,
-                width: 100,
-                margin: EdgeInsets.all(5),
-                padding: EdgeInsets.all(4.0),
-                decoration: BoxDecoration(
-                  color: grey,
-                  border: Border(
-                    bottom: borderSide,
-                    top: borderSide,
-                    right: borderSide,
-                    left: borderSide,
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.all(1),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 0,
+                      left: 16,
+                    ),
+                    child: CustomText(
+                        text: 'User Details',
+                        size: 20,
+                        fontWeight: FontWeight.bold,
+                        color: black),
                   ),
-                  borderRadius: BorderRadius.circular(360),
-                ),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Icon(
-                    Icons.add_a_photo_outlined,
-                    size: 50,
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: white,
+                      border: Border(
+                        bottom: borderSide,
+                        top: borderSide,
+                        right: borderSide,
+                        left: borderSide,
+                      ),
+                    ),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'Names',
+                        border: InputBorder.none,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 1,
+                  ),
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: white,
+                      border: Border(
+                        bottom: borderSide,
+                        top: borderSide,
+                        right: borderSide,
+                        left: borderSide,
+                      ),
+                    ),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'Phone Number',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 1,
+                  ),
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: white,
+                      border: Border(
+                        bottom: borderSide,
+                        top: borderSide,
+                        right: borderSide,
+                        left: borderSide,
+                      ),
+                    ),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'Email',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: white,
+                      border: Border(
+                        bottom: borderSide,
+                        top: borderSide,
+                        right: borderSide,
+                        left: borderSide,
+                      ),
+                    ),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(
               height: 1,
             ),
             Container(
-              height: 45,
-              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: white,
-                border: Border(
-                  bottom: borderSide,
-                  top: borderSide,
-                  right: borderSide,
-                  left: borderSide,
-                ),
-              ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Names',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 1,
-            ),
-            Container(
-              height: 45,
-              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: white,
-                border: Border(
-                  bottom: borderSide,
-                  top: borderSide,
-                  right: borderSide,
-                  left: borderSide,
-                ),
-              ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Select Country',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 1,
-            ),
-            SizedBox(
-              height: 1,
-            ),
-            Container(
-              height: 45,
-              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: white,
-                border: Border(
-                  bottom: borderSide,
-                  top: borderSide,
-                  right: borderSide,
-                  left: borderSide,
-                ),
-              ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'State',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 1,
-            ),
-            Container(
-              height: 45,
-              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: white,
-                border: Border(
-                  bottom: borderSide,
-                  top: borderSide,
-                  right: borderSide,
-                  left: borderSide,
-                ),
-              ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'City',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 1,
-            ),
-            Container(
-              height: 45,
-              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: white,
-                border: Border(
-                  bottom: borderSide,
-                  top: borderSide,
-                  right: borderSide,
-                  left: borderSide,
-                ),
-              ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 1,
-            ),
-            Container(
-              height: 45,
-              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: white,
-                border: Border(
-                  bottom: borderSide,
-                  top: borderSide,
-                  right: borderSide,
-                  left: borderSide,
-                ),
-              ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Phone Number',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 1,
-            ),
-            Container(
-              height: 45,
-              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: white,
-                border: Border(
-                  bottom: borderSide,
-                  top: borderSide,
-                  right: borderSide,
-                  left: borderSide,
-                ),
-              ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Select Profession',
-                  border: InputBorder.none,
-                ),
+              padding: EdgeInsets.all(1),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0, left: 15),
+                    child: CustomText(
+                        text: 'Others',
+                        size: 20,
+                        fontWeight: FontWeight.bold,
+                        color: black),
+                  ),
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: white,
+                      border: Border(
+                        bottom: borderSide,
+                        top: borderSide,
+                        right: borderSide,
+                        left: borderSide,
+                      ),
+                    ),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'Country',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 1,
+                  ),
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: white,
+                      border: Border(
+                        bottom: borderSide,
+                        top: borderSide,
+                        right: borderSide,
+                        left: borderSide,
+                      ),
+                    ),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'State',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 1,
+                  ),
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: white,
+                      border: Border(
+                        bottom: borderSide,
+                        top: borderSide,
+                        right: borderSide,
+                        left: borderSide,
+                      ),
+                    ),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'City',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: white,
+                      border: Border(
+                        bottom: borderSide,
+                        top: borderSide,
+                        right: borderSide,
+                        left: borderSide,
+                      ),
+                    ),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'What do you do?  / Select Profession',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(
@@ -237,7 +261,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
               ),
               child: TextButton(
                   onPressed: () =>
-                      Navigator.pushNamed(context, route.loginPage),
+                      Navigator.pushNamed(context, route.confirmProfilePage),
                   child: CustomText(
                     text: 'Submit',
                     color: white,

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:woka5_app/widgets/custom_border.dart';
 import 'package:woka5_app/widgets/custom_color.dart';
 import 'package:woka5_app/widgets/custom_text.dart';
+import 'package:woka5_app/route/route.dart' as route;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -269,11 +270,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 child: Row(
                   children: [
-                    CustomText(
-                        text: 'Become a WOKA Artisan',
-                        size: 18,
-                        fontWeight: FontWeight.normal,
-                        color: black),
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.pushNamed(context, route.artisanFormPage),
+                      child: CustomText(
+                          text: 'Become a WOKA Artisan',
+                          size: 18,
+                          fontWeight: FontWeight.normal,
+                          color: black),
+                    ),
                   ],
                 ),
               ),

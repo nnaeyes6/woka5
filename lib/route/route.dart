@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:woka5_app/route/bottom_navigator_bar.dart';
 import 'package:woka5_app/screens/artisan_form.dart';
+import 'package:woka5_app/screens/confirm_profile.dart';
 import 'package:woka5_app/screens/dashboard.dart';
 import 'package:woka5_app/screens/home.dart';
+import 'package:woka5_app/screens/intro.dart';
 import 'package:woka5_app/screens/jobs.dart';
 import 'package:woka5_app/screens/login.dart';
 import 'package:woka5_app/screens/messages.dart';
@@ -23,8 +25,10 @@ const String resetPasswordPage = 'resetPassword';
 const String artisanFormPage = 'artisanform';
 const String bottomNavigatorPage = 'bottomNavigator';
 const String profilePage = 'profile';
-const String messagePage = 'meaasage';
+const String messagePage = 'message';
 const String jobsPage = 'jobs';
+const String confirmProfilePage = 'confirmProfile';
+const String introPage = 'intro';
 
 // creating the route CONTROLLER to control the route flow
 
@@ -52,6 +56,10 @@ Route<dynamic> controller(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => MessagePage());
     case profilePage:
       return MaterialPageRoute(builder: (_) => ProfilePage());
+    case confirmProfilePage:
+      return MaterialPageRoute(builder: (_) => ConfirmProfile());
+    case introPage:
+      return MaterialPageRoute(builder: (_) => IntroPage());
 
     default:
       throw ('This route name does not exist');

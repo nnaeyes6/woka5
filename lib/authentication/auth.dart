@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:woka5_app/route/route.dart' as route;
 
 class AuthProvider {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -56,7 +58,8 @@ class AuthProvider {
   }
 
 // logout account
-  void signOut() async {
+  void signOut(BuildContext context) async {
     await auth.signOut();
+    Navigator.of(context).pushNamed(route.loginPage);
   }
 }

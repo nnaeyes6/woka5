@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:woka5_app/route/route.dart' as route;
@@ -16,6 +19,23 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  _fetchCurrentUserData() async {
+    final User? user = await auth.currentUser;
+
+    if (user != null && user.email!.contains('@')) {
+      inspect(user.email);
+      Navigator.of(context).pushNamed(route.bottomNavigatorPage);
+    }
+  }
+
+  @override
+  void initState() {
+    _fetchCurrentUserData();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

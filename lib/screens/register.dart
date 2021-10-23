@@ -5,7 +5,6 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:woka5_app/authentication/auth.dart';
 import 'package:woka5_app/main.dart';
 import 'package:woka5_app/route/route.dart' as route;
 import 'package:woka5_app/widgets/custom_border.dart';
@@ -35,7 +34,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // _fireBaseAuth.initi
     // _emailController.addListener(() => setState(() {}));
@@ -47,7 +45,6 @@ class _RegisterPageState extends State<RegisterPage> {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _passwordController.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 
