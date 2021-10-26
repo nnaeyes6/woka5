@@ -86,12 +86,36 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                   TextFormField(
                     controller: _firstNameController,
                     keyboardType: TextInputType.text,
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                        return 'Please enter correct name';
+                      }
+                      return '';
+                    },
                     decoration: InputDecoration(
                         hintText: 'Enter your first name',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                         labelText: 'First Name'),
-                  )
+                  ),
+                  const SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Validate returns true if the form is valid, or false otherwise.
+                        if (_formKey.currentState!.validate()) {
+                          // If the form is valid, display a snackbar. In the real world,
+                          // you'd often call a server or save the information in a database.
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Processing Data')),
+                          );
+                        }
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  ),
                 ],
               )),
         ),
