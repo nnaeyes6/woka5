@@ -74,12 +74,6 @@ class _ConfirmProfileState extends State<ConfirmProfile> {
               margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
               padding: EdgeInsets.all(4.0),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.blue.shade900,
-                    Colors.yellow.shade900,
-                  ],
-                ),
                 borderRadius: borderRadius,
               ),
               child: TextButton(

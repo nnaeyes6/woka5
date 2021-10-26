@@ -200,8 +200,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 borderRadius: borderRadius,
               ),
               child: TextButton(
-                  onPressed: () =>
-                      AuthController().submitUserToFirebase(context),
+                  onPressed: () => AuthController().submitUserToFirebase(
+                      context,
+                      firstName: _firstNameController,
+                      lastName: _lastNameController,
+                      email: _emailController,
+                      password: _passwordController),
                   child: CustomText(
                     text: 'Continue',
                     color: white,

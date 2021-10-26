@@ -283,8 +283,8 @@ class _LoginPageState extends State<LoginPage> {
               borderRadius: borderRadius,
             ),
             child: TextButton(
-                onPressed: () =>
-                    AuthController().submitLoginDetailsToFirebase(context),
+                onPressed: () {},
+                // AuthController().submitLoginDetailsToFirebase(context),
                 child: CustomText(
                   text: 'Continue',
                   color: white,
