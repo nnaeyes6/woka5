@@ -1,11 +1,12 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:woka5_app/route/route.dart' as route;
 import 'package:woka5_app/widgets/custom_border.dart';
-
+import 'package:woka5_app/route/route.dart' as route;
 import 'package:woka5_app/widgets/custom_color.dart';
 import 'package:woka5_app/widgets/custom_text.dart';
 
@@ -16,7 +17,44 @@ class ArtisanFormPage extends StatefulWidget {
 }
 
 class _ArtisanFormPageState extends State<ArtisanFormPage> {
-  int currentIndex = 0;
+  CollectionReference wokaUsers =
+      FirebaseFirestore.instance.collection('wokaUsers');
+  final TextEditingController _namesController = TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
+  final TextEditingController _stateController = TextEditingController();
+
+  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _countryController = TextEditingController();
+
+  final TextEditingController _professionController = TextEditingController();
+
+  bool _showPassword = false;
+
+  bool _obscureText = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _cityController.dispose();
+    _namesController.dispose();
+    _phoneController.dispose();
+    _professionController.dispose();
+    _stateController.dispose();
+    _countryController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +106,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                       ),
                     ),
                     child: TextFormField(
+                      controller: _namesController,
                       decoration: InputDecoration(
                         hintText: 'Names',
                         border: InputBorder.none,
@@ -91,6 +130,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                       ),
                     ),
                     child: TextFormField(
+                      controller: _phoneController,
                       decoration: InputDecoration(
                         hintText: 'Phone Number',
                         border: InputBorder.none,
@@ -114,6 +154,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                       ),
                     ),
                     child: TextFormField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                         hintText: 'Email',
                         border: InputBorder.none,
@@ -134,8 +175,18 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                       ),
                     ),
                     child: TextFormField(
+                      controller: _passwordController,
+                      obscureText: _obscureText,
                       decoration: InputDecoration(
                         hintText: 'Password',
+                        suffixIcon: IconButton(
+                            icon: _showPassword
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off),
+                            onPressed: () => setState(() {
+                                  _obscureText = !_obscureText;
+                                  _showPassword = !_showPassword;
+                                })),
                         border: InputBorder.none,
                       ),
                     ),
@@ -173,6 +224,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                       ),
                     ),
                     child: TextFormField(
+                      controller: _countryController,
                       decoration: InputDecoration(
                         hintText: 'Country',
                         border: InputBorder.none,
@@ -196,6 +248,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                       ),
                     ),
                     child: TextFormField(
+                      controller: _stateController,
                       decoration: InputDecoration(
                         hintText: 'State',
                         border: InputBorder.none,
@@ -219,6 +272,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                       ),
                     ),
                     child: TextFormField(
+                      controller: _cityController,
                       decoration: InputDecoration(
                         hintText: 'City',
                         border: InputBorder.none,
@@ -239,6 +293,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                       ),
                     ),
                     child: TextFormField(
+                      controller: _professionController,
                       decoration: InputDecoration(
                         hintText: 'What do you do?  / Select Profession',
                         border: InputBorder.none,
@@ -248,9 +303,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 5,
-            ),
+            SizedBox(height: 5),
             Container(
               height: 57,
               margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
@@ -260,8 +313,24 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                 borderRadius: borderRadius,
               ),
               child: TextButton(
-                  onPressed: () =>
-                      Navigator.pushNamed(context, route.confirmProfilePage),
+                  onPressed: () {
+                    Map<String, dynamic> data = {
+                      'names': _namesController,
+                      'email': _emailController,
+                      'password': _passwordController,
+                      'phoneNumber': _phoneController,
+                      'country': _countryController,
+                      'state': _stateController,
+                      'city': _cityController,
+                      'profession': _professionController,
+                    };
+                    FirebaseFirestore.instance
+                        .collection('wokaUsers')
+                        .add(data);
+                    print('hello world');
+
+                    Navigator.pushNamed(context, route.confirmProfilePage);
+                  },
                   child: CustomText(
                     text: 'Submit',
                     color: white,
@@ -271,45 +340,6 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: BottomNavigationBar(
-            backgroundColor: white,
-            fixedColor: black,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: currentIndex,
-            onTap: (index) => setState(() => currentIndex = index),
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.explore,
-                  color: black,
-                ),
-                label: 'Explore',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.mail_outline_rounded,
-                  color: black,
-                ),
-                label: 'Jobs',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.message_outlined,
-                  color: black,
-                ),
-                label: ('Message'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person_add_alt_1_rounded,
-                  color: black,
-                ),
-                label: 'Profile',
-              ),
-            ]),
       ),
     );
   }

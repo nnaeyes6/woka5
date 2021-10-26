@@ -3,12 +3,12 @@
 import 'dart:ui';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:woka5_app/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:woka5_app/authentication/auth_controller.dart';
 import 'package:woka5_app/widgets/custom_border.dart';
 import 'package:woka5_app/widgets/custom_color.dart';
 import 'package:woka5_app/widgets/custom_text.dart';
@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
             ),
             TextButton(
               onPressed: () {
-                AuthProvider().signOut(context);
+                AuthController().signOut(context);
               },
               child: Icon(Icons.logout_outlined,
                   size: 20, color: Colors.yellow[900]),

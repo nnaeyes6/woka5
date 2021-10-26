@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:woka5_app/authentication/auth.dart';
-import 'package:woka5_app/screens/login.dart';
+import 'package:woka5_app/authentication/auth_controller.dart';
 import 'package:woka5_app/widgets/custom_border.dart';
 import 'package:woka5_app/widgets/custom_color.dart';
 import 'package:woka5_app/widgets/custom_text.dart';
@@ -15,6 +14,7 @@ class ResetPasswordPage extends StatefulWidget {
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
+var isLoading = false;
 TextEditingController _userNameController = TextEditingController();
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
@@ -73,7 +73,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             setState(() {
                               isLoading = true;
                             });
-                            AuthProvider()
+                            AuthController()
                                 .resetPassword(
                               email: _userNameController.text.trim(),
                             )

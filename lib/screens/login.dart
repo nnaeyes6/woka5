@@ -1,19 +1,12 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, curly_braces_in_flow_control_structures, void_checks, avoid_print, unnecessary_null_comparison
 
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:woka5_app/authentication/auth.dart';
-import 'package:woka5_app/main.dart';
+import 'package:woka5_app/authentication/auth_controller.dart';
 import 'package:woka5_app/route/route.dart' as route;
 import 'package:woka5_app/widgets/custom_border.dart';
 import 'package:woka5_app/widgets/custom_color.dart';
-import 'package:woka5_app/widgets/custom_spinner.dart';
 import 'package:woka5_app/widgets/custom_text.dart';
-import 'package:woka5_app/widgets/toaster.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -24,10 +17,21 @@ class LoginPage extends StatefulWidget {
 
 TextEditingController _emailController = TextEditingController();
 TextEditingController _passwordController = TextEditingController();
-bool isLoading = false;
+bool _showPassword = false;
+bool _obscureText = true;
 
 class _LoginPageState extends State<LoginPage> {
-  final FirebaseAuth? _fireBaseAuth = FirebaseAuth.instance;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,15 +181,19 @@ class _LoginPageState extends State<LoginPage> {
             ),
             child: TextFormField(
               controller: _passwordController,
-              cursorColor: Colors.black,
+              obscureText: _obscureText,
               decoration: InputDecoration(
                 hintText: 'Password',
-                suffixIcon: Icon(Icons.remove_red_eye_rounded),
+                suffixIcon: IconButton(
+                    icon: _showPassword
+                        ? Icon(Icons.visibility)
+                        : Icon(Icons.visibility_off),
+                    onPressed: () => setState(() {
+                          _obscureText = !_obscureText;
+                          _showPassword = !_showPassword;
+                        })),
                 border: InputBorder.none,
               ),
-              keyboardType: TextInputType.visiblePassword,
-              textAlign: TextAlign.start,
-              obscureText: true,
             ),
           ),
           Padding(
@@ -275,7 +283,8 @@ class _LoginPageState extends State<LoginPage> {
               borderRadius: borderRadius,
             ),
             child: TextButton(
-                onPressed: () => submitLoginDetailsToFirebase(context),
+                onPressed: () =>
+                    AuthController().submitLoginDetailsToFirebase(context),
                 child: CustomText(
                   text: 'Continue',
                   color: white,
@@ -287,114 +296,4 @@ class _LoginPageState extends State<LoginPage> {
       )),
     );
   }
-
-  void submitLoginDetailsToFirebase(BuildContext context) async {
-    if (_emailController.text.trim().isEmpty)
-      return ToasterMessages.show(context, 'Please enter an email');
-    if (_passwordController.text.isEmpty)
-      return ToasterMessages.show(context, 'Please enter a password!');
-    print('${_emailController.text.trim()}, ${_passwordController.text}');
-
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (builder) {
-          return CustomSpinner(msg: 'Authenticating...').build(context);
-        });
-
-    try {
-      UserCredential firebaseLoggedInUser = await _fireBaseAuth!
-          .signInWithEmailAndPassword(
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim());
-      // print('${firebaseLoggedInUser.user.uid}');
-
-      if (firebaseLoggedInUser != null) {
-        print('${firebaseLoggedInUser.user}');
-        //
-        userRef
-            .child(firebaseLoggedInUser.user!.uid)
-            .once()
-            .catchError((error, stackTrace) {
-          inspect(error);
-          inspect(stackTrace);
-        }).then((DataSnapshot snapshot) {
-          print('''${snapshot}
-                  ''');
-
-          if (snapshot.value != null) {
-            inspect(snapshot);
-            Navigator.of(context).pop();
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                route.bottomNavigatorPage, (route) => false);
-          } else {
-            // print('${snapshot.toString()}');
-            _fireBaseAuth!.signOut();
-            ToasterMessages.show(context, 'Wrong email or password!');
-          }
-        });
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'invalid-email') {
-        inspect(e);
-        ToasterMessages.show(context,
-            'The email you entered doesn\'t exist or is mispelled. Please try again with a valid email.');
-        Navigator.of(context).pop();
-      } else if (e.code == 'user-not-found') {
-        print('${e.code}');
-        ToasterMessages.show(context, 'No user was found with this email.');
-        Navigator.of(context).pop();
-      } else if (e.code == 'wrong-password') {
-        print('${e.code}');
-        ToasterMessages.show(context,
-            'Wrong password. Please enter the correct password for this email');
-        Navigator.of(context).pop();
-      } else {
-        print(e.code);
-        ToasterMessages.show(context,
-            'Please check that you have an active internet connection');
-        Navigator.of(context).pop();
-      }
-    }
-  }
 }
-
-
-// 
-//  .onError((error, stackTrace) {
-//           print('''  
-//                ${error}
-//                ${stackTrace}
-//               ''');
-//           return Exception(error);
-//         }).
-
-
-
-
-// setState(() {
-//                             isLoading = true;
-//                           });
-//                           AuthProvider()
-//                               .signIn(
-//                             email: _emailController.text.trim(),
-//                             password: _passwordController.text.trim(),
-//                           )
-//                               .then((value) {
-//                             setState(() {
-//                               isLoading = false;
-//                             });
-//                             if (value == 'Welcome to WOKA') {
-//                               () => Navigator.pushNamed(
-//                                   context, route.bottomNavigatorPage);
-//                             } else {
-//                               setState(() {
-//                                 isLoading = false;
-//                               });
-//                               ScaffoldMessenger.of(context).showSnackBar(
-//                                 SnackBar(
-//                                   content: Text(value),
-//                                 ),
-//                               );
-//                             }
-//                           });

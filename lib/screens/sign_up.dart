@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, await_only_futures
 
 import 'dart:developer';
 
@@ -32,7 +32,6 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void initState() {
     _fetchCurrentUserData();
-    // TODO: implement initState
     super.initState();
   }
 

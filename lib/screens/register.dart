@@ -1,18 +1,13 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:woka5_app/main.dart';
+import 'package:woka5_app/authentication/auth_controller.dart';
 import 'package:woka5_app/route/route.dart' as route;
 import 'package:woka5_app/widgets/custom_border.dart';
 
 import 'package:woka5_app/widgets/custom_color.dart';
-import 'package:woka5_app/widgets/custom_spinner.dart';
 import 'package:woka5_app/widgets/custom_text.dart';
-import 'package:woka5_app/widgets/toaster.dart';
 
 // ignore: use_key_in_widget_constructors
 class RegisterPage extends StatefulWidget {
@@ -22,21 +17,18 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   // get reference to global firebase auth instance
-  final FirebaseAuth _fireBaseAuth = FirebaseAuth.instance;
+  // final FirebaseAuth _fireBaseAuth = FirebaseAuth.instance;
 
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool isLoading = false;
-  bool showPassword = false;
-  bool obscureText = true;
+  bool _showPassword = false;
+  bool _obscureText = true;
 
   @override
   void initState() {
     super.initState();
-    // _fireBaseAuth.initi
-    // _emailController.addListener(() => setState(() {}));
   }
 
   @override
@@ -155,16 +147,16 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               child: TextFormField(
                 controller: _passwordController,
-                obscureText: obscureText,
+                obscureText: _obscureText,
                 decoration: InputDecoration(
                   hintText: 'Password',
                   suffixIcon: IconButton(
-                      icon: showPassword
+                      icon: _showPassword
                           ? Icon(Icons.visibility)
                           : Icon(Icons.visibility_off),
                       onPressed: () => setState(() {
-                            obscureText = !obscureText;
-                            showPassword = !showPassword;
+                            _obscureText = !_obscureText;
+                            _showPassword = !_showPassword;
                           })),
                   border: InputBorder.none,
                 ),
@@ -208,7 +200,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 borderRadius: borderRadius,
               ),
               child: TextButton(
-                  onPressed: () => submitUserToFirebase(context),
+                  onPressed: () =>
+                      AuthController().submitUserToFirebase(context),
                   child: CustomText(
                     text: 'Continue',
                     color: white,
@@ -315,51 +308,51 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  submitUserToFirebase(BuildContext context) async {
-    UserCredential? firebaseUser;
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (builder) {
-          return CustomSpinner(msg: 'Creating your account...').build(context);
-        });
+  // submitUserToFirebase(BuildContext context) async {
+  //   UserCredential? firebaseUser;
+  //   showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (builder) {
+  //         return CustomSpinner(msg: 'Creating your account...').build(context);
+  //       });
 
-    try {
-      inspect(_emailController);
-      inspect(_passwordController);
-      firebaseUser = await _fireBaseAuth.createUserWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim());
-    } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case 'email-already-in-use':
-          inspect(e);
-          Navigator.of(context).pop();
-          return ToasterMessages.show(context,
-              'This email is already in use. Please try again with a unique email.');
-        default:
-          inspect(e);
-          Navigator.of(context).pop();
-          ToasterMessages.show(context,
-              'An error occured. Please try with a unique email and phone');
-      }
-    }
+  //   try {
+  //     inspect(_emailController);
+  //     inspect(_passwordController);
+  //     firebaseUser = await _fireBaseAuth.createUserWithEmailAndPassword(
+  //         email: _emailController.text.trim(),
+  //         password: _passwordController.text.trim());
+  //   } on FirebaseAuthException catch (e) {
+  //     switch (e.code) {
+  //       case 'email-already-in-use':
+  //         inspect(e);
+  //         Navigator.of(context).pop();
+  //         return ToasterMessages.show(context,
+  //             'This email is already in use. Please try again with a unique email.');
+  //       default:
+  //         inspect(e);
+  //         Navigator.of(context).pop();
+  //         ToasterMessages.show(context,
+  //             'An error occured. Please try with a unique email and phone');
+  //     }
+  //   }
 
-    if (firebaseUser != null) {
-      Map user = {
-        'firstName': _firstNameController.text.trim(),
-        'lastName': _lastNameController.text.trim(),
-        'email': _emailController.text.trim()
-      };
-      firebaseUser.user!.uid;
-      userRef.child(firebaseUser.user!.uid).set(user);
-      Navigator.of(context).pop();
-      ToasterMessages.show(context, 'Account Created Successfully');
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(route.loginPage, (route) => false);
-    } else {
-      Navigator.of(context).pop();
-      ToasterMessages.show(context, 'An error occured!');
-    }
-  }
+  //   if (firebaseUser != null) {
+  //     Map user = {
+  //       'firstName': _firstNameController.text.trim(),
+  //       'lastName': _lastNameController.text.trim(),
+  //       'email': _emailController.text.trim()
+  //     };
+  //     firebaseUser.user!.uid;
+  //     userRef.child(firebaseUser.user!.uid).set(user);
+  //     Navigator.of(context).pop();
+  //     ToasterMessages.show(context, 'Account Created Successfully');
+  //     Navigator.of(context)
+  //         .pushNamedAndRemoveUntil(route.loginPage, (route) => false);
+  //   } else {
+  //     Navigator.of(context).pop();
+  //     ToasterMessages.show(context, 'An error occured!');
+  //   }
+  // }
 }

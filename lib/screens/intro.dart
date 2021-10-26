@@ -55,7 +55,7 @@ class _IntroPageState extends State<IntroPage> {
                 onPressed: () =>
                     Navigator.pushNamed(context, route.artisanFormPage),
                 child: CustomText(
-                  text: 'SIGN UP WOKA ARTISAN',
+                  text: 'SIGN UP FOR WOKA ARTISAN',
                   color: white,
                   size: 18,
                   fontWeight: FontWeight.bold,
@@ -72,7 +72,7 @@ class _IntroPageState extends State<IntroPage> {
             child: TextButton(
                 onPressed: () => Navigator.pushNamed(context, route.signUpPage),
                 child: CustomText(
-                  text: 'SIGN UP OTHER USERS',
+                  text: 'SIGN UP FOR OTHER USERS',
                   color: white,
                   size: 18,
                   fontWeight: FontWeight.bold,
