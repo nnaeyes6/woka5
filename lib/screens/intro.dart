@@ -21,64 +21,67 @@ class _IntroPageState extends State<IntroPage> {
     return Scaffold(
       backgroundColor: Colors.blue.shade900,
       body: Center(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CustomText(
-              text: 'WELCOME TO WOKA ARTISAN',
-              size: 26,
-              fontWeight: FontWeight.bold,
-              color: white),
-          SizedBox(
-            height: 30,
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 50, 0, 50),
-            height: 200,
-            width: 200,
-            decoration: BoxDecoration(
-              color: Colors.blue.shade900,
-              // ignore: prefer_const_literals_to_create_immutables
+          child: Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CustomText(
+                text: 'WELCOME TO WOKA ARTISAN',
+                size: 26,
+                fontWeight: FontWeight.bold,
+                color: white),
+            SizedBox(
+              height: 25,
             ),
-            child: SvgPicture.asset('lib/images/logo_blue.svg'),
-          ),
-          Container(
-            height: 57,
-            margin: EdgeInsets.only(top: 50),
-            padding: EdgeInsets.all(4.0),
-            decoration: BoxDecoration(
-              color: Colors.yellow.shade900,
-              borderRadius: borderRadius,
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 50, 0, 50),
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(
+                color: Colors.blue.shade900,
+                // ignore: prefer_const_literals_to_create_immutables
+              ),
+              child: SvgPicture.asset('lib/images/logo_blue.svg'),
             ),
-            child: TextButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, route.artisanFormPage),
-                child: CustomText(
-                  text: 'SIGN UP FOR WOKA ARTISAN',
-                  color: white,
-                  size: 18,
-                  fontWeight: FontWeight.bold,
-                )),
-          ),
-          Container(
-            height: 57,
-            margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
-            padding: EdgeInsets.all(4.0),
-            decoration: BoxDecoration(
-              color: Colors.yellow.shade900,
-              borderRadius: borderRadius,
+            Container(
+              height: 50,
+              margin: EdgeInsets.only(top: 50),
+              padding: EdgeInsets.all(4.0),
+              decoration: BoxDecoration(
+                color: Colors.yellow.shade900,
+                borderRadius: borderRadius,
+              ),
+              child: TextButton(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, route.artisanFormPage),
+                  child: CustomText(
+                    text: 'SIGN UP FOR WOKA ARTISAN',
+                    color: white,
+                    size: 18,
+                    fontWeight: FontWeight.bold,
+                  )),
             ),
-            child: TextButton(
-                onPressed: () => Navigator.pushNamed(context, route.signUpPage),
-                child: CustomText(
-                  text: 'SIGN UP FOR OTHER USERS',
-                  color: white,
-                  size: 18,
-                  fontWeight: FontWeight.bold,
-                )),
-          ),
-        ],
+            Container(
+              height: 50,
+              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+              padding: EdgeInsets.all(4.0),
+              decoration: BoxDecoration(
+                color: Colors.yellow.shade900,
+                borderRadius: borderRadius,
+              ),
+              child: TextButton(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, route.signUpPage),
+                  child: CustomText(
+                    text: 'SIGN UP FOR OTHER USERS',
+                    color: white,
+                    size: 18,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+          ],
+        ),
       )),
     );
   }
