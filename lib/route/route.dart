@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:woka5_app/route/bottom_navigator_bar.dart';
 import 'package:woka5_app/screens/artisan_form.dart';
 import 'package:woka5_app/screens/confirm_profile.dart';
-import 'package:woka5_app/screens/dashboard.dart';
+import 'package:woka5_app/screens/view_profile.dart';
 import 'package:woka5_app/screens/home.dart';
 import 'package:woka5_app/screens/intro.dart';
 import 'package:woka5_app/screens/jobs.dart';
@@ -20,7 +20,7 @@ const String loginPage = 'login';
 const String registerPage = 'register';
 const String homePage = 'home';
 const String signUpPage = 'signUp';
-const String dashboardPage = 'dashboard';
+const String viewProfilePage = 'viewProfile';
 const String resetPasswordPage = 'resetPassword';
 const String artisanFormPage = 'artisanform';
 const String bottomNavigatorPage = 'bottomNavigator';
@@ -40,8 +40,8 @@ Route<dynamic> controller(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => Home());
     case signUpPage:
       return MaterialPageRoute(builder: (_) => SignUpPage());
-    case dashboardPage:
-      return MaterialPageRoute(builder: (_) => Dashboard());
+    case viewProfilePage:
+      return MaterialPageRoute(builder: (_) => ViewProfilePage());
     case resetPasswordPage:
       return MaterialPageRoute(builder: (_) => ResetPasswordPage());
     case artisanFormPage:
@@ -62,6 +62,6 @@ Route<dynamic> controller(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => IntroPage());
 
     default:
-      throw ('This route name does not exist');
+      throw ('This Page does not exist');
   }
 }
