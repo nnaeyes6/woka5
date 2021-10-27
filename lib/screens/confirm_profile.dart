@@ -1,93 +1,97 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+import 'dart:ui';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:woka5_app/widgets/custom_border.dart';
 import 'package:woka5_app/widgets/custom_color.dart';
 import 'package:woka5_app/widgets/custom_text.dart';
 import 'package:woka5_app/route/route.dart' as route;
 
-class ConfirmProfile extends StatefulWidget {
-  const ConfirmProfile({Key? key}) : super(key: key);
+class ConfirmProfilePage extends StatefulWidget {
+  const ConfirmProfilePage({Key? key}) : super(key: key);
 
   @override
-  _ConfirmProfileState createState() => _ConfirmProfileState();
+  _ConfirmProfilePageState createState() => _ConfirmProfilePageState();
 }
 
-class _ConfirmProfileState extends State<ConfirmProfile> {
+class _ConfirmProfilePageState extends State<ConfirmProfilePage> {
+  ImagePicker _image = ImagePicker();
+  String url = '';
+  File? _file;
+  Future<File?> _selectImage() async {
+    var _img = await _image.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _file = File(_img!.path);
+    });
+  }
+
+  Future _uploadFile() async {
+    var _imageFile =
+        FirebaseStorage.instance.ref().child('path').child('/.jpg');
+    UploadTask task = _imageFile.putFile(_file!);
+    TaskSnapshot snapshot = await task;
+    // for downloading
+    url = await snapshot.ref.getDownloadURL();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 10,
-        title: CustomText(
-          text: 'Woka Registration',
-          color: white,
-          fontWeight: FontWeight.bold,
-          size: 25,
-        ),
-        backgroundColor: Colors.blue,
-      ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 5,
-            ),
-            CustomText(
-                text: 'Please tap to upload your profile pix',
-                size: 18,
-                fontWeight: FontWeight.w400,
-                color: black),
-            Center(
-              child: Container(
-                height: 200,
-                width: 200,
-                margin: EdgeInsets.all(5),
-                padding: EdgeInsets.all(4.0),
-                decoration: BoxDecoration(
-                  color: grey,
-                  border: Border(
-                    bottom: borderSide,
-                    top: borderSide,
-                    right: borderSide,
-                    left: borderSide,
-                  ),
-                  borderRadius: BorderRadius.circular(360),
-                ),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Icon(
-                    Icons.add_a_photo_outlined,
-                    size: 50,
-                  ),
-                ),
+      backgroundColor: Colors.blue.shade900,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CustomText(
+              text: 'WOKA profile picture',
+              size: 22,
+              fontWeight: FontWeight.bold,
+              color: white),
+          InkWell(
+            onTap: () {
+              _selectImage();
+            },
+            child: Center(
+              child: CircleAvatar(
+                backgroundImage: _file == null
+                    ? AssetImage('')
+                    : FileImage(File(_file!.path)) as ImageProvider,
+                radius: 80,
               ),
             ),
-            SizedBox(
-              height: 5,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            height: 50,
+            width: 150,
+            padding: EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              color: Colors.yellow.shade900,
+              borderRadius: BorderRadius.circular(20),
             ),
-            Container(
-              height: 57,
-              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
-              padding: EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
-                borderRadius: borderRadius,
-              ),
-              child: TextButton(
-                  onPressed: () =>
-                      Navigator.pushNamed(context, route.bottomNavigatorPage),
-                  child: CustomText(
-                    text: 'Continue',
-                    color: white,
-                    size: 18,
+            child: TextButton(
+              onPressed: () {
+                _uploadFile();
+              },
+              child: Text(
+                'Submit',
+                style: TextStyle(
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
-                  )),
+                    color: Colors.white),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

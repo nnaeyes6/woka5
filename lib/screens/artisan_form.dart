@@ -90,15 +90,14 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                     fontWeight: FontWeight.bold,
                     color: black),
                 SizedBox(
-                  height: 1,
+                  height: 5,
                 ),
                 TextFormField(
                   controller: _firstNameController,
                   keyboardType: TextInputType.text,
                   validator: (value) {
-                    if (value!.isEmpty ||
-                        RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                      return 'Please enter correct name';
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your first name';
                     }
                     return null;
                   },
@@ -109,7 +108,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                       labelText: 'First Name'),
                 ),
                 SizedBox(
-                  height: 1,
+                  height: 5,
                 ),
                 TextFormField(
                   controller: _lastNameController,
@@ -119,14 +118,14 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                         borderRadius: BorderRadius.circular(5)),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty &&
-                        RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                      return 'Please enter correct name';
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your last name';
                     }
+                    return null;
                   },
                 ),
                 SizedBox(
-                  height: 1,
+                  height: 5,
                 ),
                 TextFormField(
                   controller: _phoneController,
@@ -136,11 +135,10 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                     hintText: 'Phone Number',
                   ),
                   validator: (value) {
-                    if (value!.isEmpty ||
-                        RegExp(r'^[+]*[(]{0,1}[0,9]{1,4}[)]{0,1}[-\s\./0-9]]+$')
-                            .hasMatch(value)) {
-                      return 'Please enter correct number';
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter yoyur phone number';
                     }
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -154,11 +152,10 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                     hintText: 'Email',
                   ),
                   validator: (value) {
-                    if (value!.isEmpty ||
-                        RegExp(r'^[\w-\.]+@([\w-\]+\.)+[\w]{2,4}')
-                            .hasMatch(value)) {
-                      return 'Please enter a valid email';
+                    if (value == null || value.isEmpty) {
+                      return 'Please your email';
                     }
+                    return null;
                   },
                 ),
                 TextFormField(
@@ -178,13 +175,14 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                         borderRadius: BorderRadius.circular(5)),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty && value.length >= 5) {
-                      return 'Please enter a correct Password';
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter password';
                     }
+                    return null;
                   },
                 ),
                 SizedBox(
-                  height: 1,
+                  height: 5,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,15 +203,14 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                             borderRadius: BorderRadius.circular(5)),
                       ),
                       validator: (value) {
-                        if (value!.isEmpty &&
-                            RegExp(r'^[a-z A-Z]+$').hasMatch(value) &&
-                            value.length >= 5) {
-                          return 'Please enter a correct country';
+                        if (value == null || value.isEmpty) {
+                          return 'Country';
                         }
+                        return null;
                       },
                     ),
                     SizedBox(
-                      height: 1,
+                      height: 5,
                     ),
                     TextFormField(
                       controller: _stateController,
@@ -223,14 +220,14 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                             borderRadius: BorderRadius.circular(5)),
                       ),
                       validator: (value) {
-                        if (value!.isEmpty ||
-                            RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                          return 'Name is not correct';
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your state';
                         }
+                        return null;
                       },
                     ),
                     SizedBox(
-                      height: 1,
+                      height: 5,
                     ),
                     TextFormField(
                       controller: _cityController,
@@ -240,11 +237,14 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                             borderRadius: BorderRadius.circular(5)),
                       ),
                       validator: (value) {
-                        if (value!.isEmpty ||
-                            RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                          return 'Name is not correct';
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your city';
                         }
+                        return null;
                       },
+                    ),
+                    SizedBox(
+                      height: 5,
                     ),
                     TextFormField(
                       controller: _professionController,
@@ -254,10 +254,10 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                             borderRadius: BorderRadius.circular(5)),
                       ),
                       validator: (value) {
-                        if (value!.isEmpty ||
-                            RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                          return 'Name is not correct';
+                        if (value == null || value.isEmpty) {
+                          return 'Enter your city';
                         }
+                        return null;
                       },
                     ),
                   ],
@@ -280,23 +280,23 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                           return;
                         }
 
-                        // Map<String, dynamic> data = {
-                        //   'firstName': _firstNameController.text,
-                        //   'lastName': _lastNameController.text,
-                        //   'email': _emailController.text,
-                        //   'password': _passwordController.text,
-                        //   'phoneNumber': _phoneController.text,
-                        //   'country': _countryController.text,
-                        //   'state': _stateController.text,
-                        //   'city': _cityController.text,
-                        //   'profession': _professionController.text,
-                        // };
+                        Map<String, dynamic> data = {
+                          'firstName': _firstNameController.text,
+                          'lastName': _lastNameController.text,
+                          'email': _emailController.text,
+                          'password': _passwordController.text,
+                          'phoneNumber': _phoneController.text,
+                          'country': _countryController.text,
+                          'state': _stateController.text,
+                          'city': _cityController.text,
+                          'profession': _professionController.text,
+                        };
 
-                        // wokaUsers.add(data).then((value) {
-                        //   inspect(value);
-                        //   ToasterMessages.show(context,
-                        //       'Your User profile was successfully created!');
-                        // }).catchError((onError) => print(onError));
+                        wokaUsers.add(data).then((value) {
+                          inspect(value);
+                          ToasterMessages.show(context,
+                              'Your User profile was successfully created!');
+                        }).catchError((onError) => print(onError));
 
                         Navigator.pushNamed(context, route.confirmProfilePage);
                       },

@@ -20,8 +20,9 @@ class _IntroPageState extends State<IntroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue.shade900,
-      body: Center(
-          child: Expanded(
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -46,15 +47,15 @@ class _IntroPageState extends State<IntroPage> {
             ),
             Container(
               height: 50,
-              margin: EdgeInsets.only(top: 50),
-              padding: EdgeInsets.all(4.0),
+              margin: EdgeInsets.only(top: 40),
+              padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 color: Colors.yellow.shade900,
                 borderRadius: borderRadius,
               ),
               child: TextButton(
                   onPressed: () =>
-                      Navigator.pushNamed(context, route.artisanFormPage),
+                      Navigator.pushNamed(context, route.confirmProfilePage),
                   child: CustomText(
                     text: 'SIGN UP FOR WOKA ARTISAN',
                     color: white,
@@ -64,15 +65,15 @@ class _IntroPageState extends State<IntroPage> {
             ),
             Container(
               height: 50,
-              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
-              padding: EdgeInsets.all(4.0),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
                 color: Colors.yellow.shade900,
                 borderRadius: borderRadius,
               ),
               child: TextButton(
                   onPressed: () =>
-                      Navigator.pushNamed(context, route.signUpPage),
+                      Navigator.pushNamed(context, route.registerPage),
                   child: CustomText(
                     text: 'SIGN UP FOR OTHER USERS',
                     color: white,
@@ -82,7 +83,7 @@ class _IntroPageState extends State<IntroPage> {
             ),
           ],
         ),
-      )),
+      ),
     );
   }
 }
