@@ -312,6 +312,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                                       phoneNumber: _phoneController.text,
                                       profession: _professionController.text,
                                       state: _stateController.text,
+                                      password: _passwordController.text,
                                     )));
                       },
                       child: Center(

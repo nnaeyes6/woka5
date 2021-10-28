@@ -27,17 +27,18 @@ class ConfirmProfilePage extends StatefulWidget {
 
   final String city;
   final String profession;
+  final String password;
 
-  ConfirmProfilePage({
-    required this.firstName,
-    required this.lastName,
-    required this.city,
-    required this.country,
-    required this.email,
-    required this.phoneNumber,
-    required this.profession,
-    required this.state,
-  });
+  ConfirmProfilePage(
+      {required this.firstName,
+      required this.lastName,
+      required this.city,
+      required this.country,
+      required this.email,
+      required this.phoneNumber,
+      required this.profession,
+      required this.state,
+      required this.password});
 
   @override
   _ConfirmProfilePageState createState() => _ConfirmProfilePageState();
@@ -116,21 +117,27 @@ class _ConfirmProfilePageState extends State<ConfirmProfilePage> {
               child: TextButton(
                 onPressed: () async {
                   ToasterMessages.show(context, 'Uploading Image to storage..');
-                  // AuthController().onCloudFirestoreSubmit(
-                  //   context,
-                  //   firstName: _firstNameController,
-                  //   lastName: _lastNameController,
-                  //   email: _emailController,
-                  //   password: _passwordController,
-                  //   phoneNumber: _phoneController,
-                  //   country: _countryController,
-                  //   state: _stateController,
-                  //   city: _cityController,
-                  //   imgUrl: _imgUrlController,
-                  //   professional: _professionController,
-                  // );
+                  //
                   await _uploadFile();
-                  Navigator.of(context).pop();
+                  Map<String, dynamic> data = {
+                    'firstName': widget.firstName,
+                    'lastName': widget.lastName,
+                    'email': widget.email,
+                    'password': widget.password,
+                    'phoneNumber': widget.phoneNumber,
+                    'country': widget.country,
+                    'state': widget.state,
+                    'city': widget.city,
+                    'profession': widget.profession,
+                    'imgUrl': urlFromStorage,
+                  };
+                  wokaUsers.add(data).then((value) {
+                    inspect(value);
+                    ToasterMessages.show(
+                        context, 'Your User profile was successfully created!');
+                  }).catchError((onError) => print(onError));
+
+                  // Navigator.of(context).pop();
                   print(widget.firstName);
                   print(widget.city);
                   print(urlFromStorage);
@@ -154,11 +161,11 @@ class _ConfirmProfilePageState extends State<ConfirmProfilePage> {
                   //     'imgUrl': _imgUrlController.text,
                   //   };
 
-                  //   wokaUsers.add(data).then((value) {
-                  //     inspect(value);
-                  //     ToasterMessages.show(
-                  //         context, 'Your User profile was successfully created!');
-                  //   }).catchError((onError) => print(onError));
+                  // wokaUsers.add(data).then((value) {
+                  //   inspect(value);
+                  //   ToasterMessages.show(
+                  //       context, 'Your User profile was successfully created!');
+                  // }).catchError((onError) => print(onError));
                 },
                 child: Text(
                   'Submit',
