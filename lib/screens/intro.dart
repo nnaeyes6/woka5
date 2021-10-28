@@ -55,7 +55,7 @@ class _IntroPageState extends State<IntroPage> {
               ),
               child: TextButton(
                   onPressed: () =>
-                      Navigator.pushNamed(context, route.confirmProfilePage),
+                      Navigator.pushNamed(context, route.artisanFormPage),
                   child: CustomText(
                     text: 'SIGN UP FOR WOKA ARTISAN',
                     color: white,

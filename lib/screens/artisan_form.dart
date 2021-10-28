@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:woka5_app/authentication/auth_controller.dart';
+import 'package:woka5_app/screens/confirm_profile.dart';
 import 'package:woka5_app/widgets/custom_border.dart';
 import 'package:woka5_app/route/route.dart' as route;
 import 'package:woka5_app/widgets/custom_color.dart';
@@ -21,9 +22,6 @@ class ArtisanFormPage extends StatefulWidget {
 }
 
 class _ArtisanFormPageState extends State<ArtisanFormPage> {
-  CollectionReference wokaUsers =
-      FirebaseFirestore.instance.collection('wokaUsers');
-
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -37,6 +35,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
   final TextEditingController _countryController = TextEditingController();
 
   final TextEditingController _professionController = TextEditingController();
+  final TextEditingController _imgUrlController = TextEditingController();
 
   bool _showPassword = false;
 
@@ -58,6 +57,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
     _professionController.dispose();
     _stateController.dispose();
     _countryController.dispose();
+    _imgUrlController.dispose();
     super.dispose();
   }
 
@@ -255,6 +255,7 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
+                          // AuthController()
                           return 'Enter your city';
                         }
                         return null;
@@ -280,31 +281,46 @@ class _ArtisanFormPageState extends State<ArtisanFormPage> {
                           return;
                         }
 
-                        Map<String, dynamic> data = {
-                          'firstName': _firstNameController.text,
-                          'lastName': _lastNameController.text,
-                          'email': _emailController.text,
-                          'password': _passwordController.text,
-                          'phoneNumber': _phoneController.text,
-                          'country': _countryController.text,
-                          'state': _stateController.text,
-                          'city': _cityController.text,
-                          'profession': _professionController.text,
-                        };
+                        // Map<String, dynamic> data = {
+                        //   'firstName': _firstNameController.text,
+                        //   'lastName': _lastNameController.text,
+                        //   'email': _emailController.text,
+                        //   'password': _passwordController.text,
+                        //   'phoneNumber': _phoneController.text,
+                        //   'country': _countryController.text,
+                        //   'state': _stateController.text,
+                        //   'city': _cityController.text,
+                        //   'profession': _professionController.text,
+                        //   'imgUrl': _imgUrlController.text,
+                        // };
 
-                        wokaUsers.add(data).then((value) {
-                          inspect(value);
-                          ToasterMessages.show(context,
-                              'Your User profile was successfully created!');
-                        }).catchError((onError) => print(onError));
+                        // wokaUsers.add(data).then((value) {
+                        //   inspect(value);
+                        //   ToasterMessages.show(context,
+                        //       'Your User profile was successfully created!');
+                        // }).catchError((onError) => print(onError));
 
-                        Navigator.pushNamed(context, route.confirmProfilePage);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ConfirmProfilePage(
+                                      firstName: _firstNameController.text,
+                                      lastName: _lastNameController.text,
+                                      email: _emailController.text,
+                                      city: _cityController.text,
+                                      country: _countryController.text,
+                                      phoneNumber: _phoneController.text,
+                                      profession: _professionController.text,
+                                      state: _stateController.text,
+                                    )));
                       },
-                      child: CustomText(
-                        text: 'Submit',
-                        color: white,
-                        size: 18,
-                        fontWeight: FontWeight.bold,
+                      child: Center(
+                        child: CustomText(
+                          text: 'Submit',
+                          color: white,
+                          size: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       )),
                 ),
               ],

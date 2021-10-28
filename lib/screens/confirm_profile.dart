@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
@@ -9,21 +10,46 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:woka5_app/widgets/custom_border.dart';
+import 'package:woka5_app/authentication/auth_controller.dart';
+import 'package:woka5_app/widgets/toaster.dart';
 import 'package:woka5_app/widgets/custom_color.dart';
 import 'package:woka5_app/widgets/custom_text.dart';
 import 'package:woka5_app/route/route.dart' as route;
 
 class ConfirmProfilePage extends StatefulWidget {
-  const ConfirmProfilePage({Key? key}) : super(key: key);
+  final String firstName;
+  final String lastName;
+  final String phoneNumber;
+  final String email;
+
+  final String country;
+  final String state;
+
+  final String city;
+  final String profession;
+
+  ConfirmProfilePage({
+    required this.firstName,
+    required this.lastName,
+    required this.city,
+    required this.country,
+    required this.email,
+    required this.phoneNumber,
+    required this.profession,
+    required this.state,
+  });
 
   @override
   _ConfirmProfilePageState createState() => _ConfirmProfilePageState();
 }
 
 class _ConfirmProfilePageState extends State<ConfirmProfilePage> {
-  ImagePicker _image = ImagePicker();
+  CollectionReference wokaUsers =
+      FirebaseFirestore.instance.collection('wokaUsers');
+
+  final ImagePicker _image = ImagePicker();
   String url = '';
+  String? urlFromStorage;
   File? _file;
   Future<File?> _selectImage() async {
     var _img = await _image.pickImage(source: ImageSource.gallery);
@@ -39,9 +65,13 @@ class _ConfirmProfilePageState extends State<ConfirmProfilePage> {
     TaskSnapshot snapshot = await task;
     // for downloading
     url = await snapshot.ref.getDownloadURL();
+    print(url);
+    setState(() {
+      urlFromStorage = url;
+    });
     // uploading to firestore
     await FirebaseFirestore.instance
-        .collection('images')
+        .collection('wokaUsers')
         .doc()
         .set({'imageUrl': url});
   }
@@ -50,9 +80,7 @@ class _ConfirmProfilePageState extends State<ConfirmProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue.shade900,
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
+      body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -86,8 +114,51 @@ class _ConfirmProfilePageState extends State<ConfirmProfilePage> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: TextButton(
-                onPressed: () {
-                  _uploadFile();
+                onPressed: () async {
+                  ToasterMessages.show(context, 'Uploading Image to storage..');
+                  // AuthController().onCloudFirestoreSubmit(
+                  //   context,
+                  //   firstName: _firstNameController,
+                  //   lastName: _lastNameController,
+                  //   email: _emailController,
+                  //   password: _passwordController,
+                  //   phoneNumber: _phoneController,
+                  //   country: _countryController,
+                  //   state: _stateController,
+                  //   city: _cityController,
+                  //   imgUrl: _imgUrlController,
+                  //   professional: _professionController,
+                  // );
+                  await _uploadFile();
+                  Navigator.of(context).pop();
+                  print(widget.firstName);
+                  print(widget.city);
+                  print(urlFromStorage);
+
+                  // AuthController().submitUserToFirebase(context,
+                  //     firstName: _firstNameController,
+                  //     lastName: _lastNameController,
+                  //     email: _emailController,
+                  //     password: _passwordController);
+                  //
+                  // Map<String, dynamic> data = {
+                  //     'firstName': _firstNameController.text,
+                  //     'lastName': _lastNameController.text,
+                  //     'email': _emailController.text,
+                  //     'password': _passwordController.text,
+                  //     'phoneNumber': _phoneController.text,
+                  //     'country': _countryController.text,
+                  //     'state': _stateController.text,
+                  //     'city': _cityController.text,
+                  //     'profession': _professionController.text,
+                  //     'imgUrl': _imgUrlController.text,
+                  //   };
+
+                  //   wokaUsers.add(data).then((value) {
+                  //     inspect(value);
+                  //     ToasterMessages.show(
+                  //         context, 'Your User profile was successfully created!');
+                  //   }).catchError((onError) => print(onError));
                 },
                 child: Text(
                   'Submit',
@@ -98,48 +169,28 @@ class _ConfirmProfilePageState extends State<ConfirmProfilePage> {
                 ),
               ),
             ),
-            StreamBuilder(
-              stream:
-                  FirebaseFirestore.instance.collection('images').snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                return GridView.builder(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    primary: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 3,
-                        crossAxisSpacing: 6),
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (_, i) {
-                      QueryDocumentSnapshot x = snapshot.data!.docs[i];
-                      if (snapshot.hasData) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, route.viewProfilePage);
-                            url:
-                            x['imageUrl'];
-                          },
-                          child: Hero(
-                            tag: x['imageUrl'],
-                            child: Card(
-                              child: Image.network(
-                                x['imageUrl'],
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    });
-              },
-            )
-          ],
-        ),
-      ),
+            //  for showing images in our apps
+            //   StreamBuilder(
+            //       stream: FirebaseFirestore.instance.collection('images').snapshots(),
+            //       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            //         return GridView.builder(
+            //             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //                 crossAxisCount: 2),
+            //             itemCount: snapshot.data!.docs.length,
+            //             itemBuilder: (_, i) {
+            //               QueryDocumentSnapshot x = snapshot.data!.docs[i];
+            //               if (snapshot.hasData) {
+            //                 return Card(
+            //                   child: Image.network(x['imageUrl']),
+            //                 );
+            //               }
+            //               return Center(
+            //                 child: CircularProgressIndicator(),
+            //               );
+            //             });
+            //       })
+            // ]),
+          ]),
     );
   }
 }

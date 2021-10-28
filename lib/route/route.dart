@@ -57,7 +57,18 @@ Route<dynamic> controller(RouteSettings settings) {
     case profilePage:
       return MaterialPageRoute(builder: (_) => ProfilePage());
     case confirmProfilePage:
-      return MaterialPageRoute(builder: (_) => ConfirmProfilePage());
+      return MaterialPageRoute(
+          builder: (_) => ConfirmProfilePage(
+                city: '',
+                country: '',
+                lastName: '',
+                firstName: '',
+                email: '',
+                phoneNumber: '',
+                profession: '',
+                state: '',
+                password: '',
+              ));
     case introPage:
       return MaterialPageRoute(builder: (_) => IntroPage());
 
